@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        用户：<input type="text" v-model="uname" v-on:keyup.delete="handle1">
+        密码：<input type="text" v-on:keyup.enter="handle" v-model="pwd">
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        Vue.config.keyCode.a = 65
+        var app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    uname: '',
+                    pwd: ''
+                }
+            },
+            methods: {
+                handle: function () {
+                    console.log(this.uname, this.pwd);
+                },
+                handle1: function () {
+                    this.uname = ''
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

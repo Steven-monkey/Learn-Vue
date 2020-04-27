@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active {
+            border: 1px, solid red;
+            width: 100px;
+            height: 100px;
+        }
+
+        .error {
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div v-bind:class="[activeClass,errorClass]"></div><br>
+        <div v-bind:class="objClasss"></div><br>
+        <div v-bind:class="arrClasses"></div>
+        <button v-on:click="handle">切换</button>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    activeClass: 'active',
+                    errorClass: 'error',
+                    arrClasses: ['active', 'error'],
+                    objClasss: {
+                        active: true,
+                        error: true
+                    }
+                }
+            },
+            methods: {
+                handle: function () {
+                    this.arrClasses.pop = 'error'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

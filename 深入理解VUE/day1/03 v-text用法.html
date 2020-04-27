@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div>{{msg}}</div>
+        <div v-text="msg"></div>
+        <div v-html="msg1"></div>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    msg: '在学一次，能不能毕业',
+                    msg1: '<h1>在学一次，就可以毕业了</h1>'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
