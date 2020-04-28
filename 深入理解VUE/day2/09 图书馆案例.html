@@ -7,27 +7,49 @@
   <style type="text/css">
     .grid {
       margin: auto;
-      width: 500px;
+      width: 530px;
       text-align: center;
     }
     .grid table {
+      border-top: 1px solid #C2D89A;
       width: 100%;
       border-collapse: collapse;
     }
     .grid th,td {
       padding: 10;
-      border: 1px dashed orange;
+      border: 1px dashed #F3DCAB;
       height: 35px;
       line-height: 35px;
     }
     .grid th {
-      background-color: orange;
+      background-color: #F3DCAB;
+    }
+    .grid .book {
+      padding-bottom: 10px;
+      padding-top: 5px;
+      background-color: #F3DCAB;
     }
   </style>
 </head>
 <body>
   <div id="app">
     <div class="grid">
+        <div>
+            <h1>图书管理</h1>
+            <div class="book">
+              <div>
+                <label for="id">
+                  编号：
+                </label>
+                <input type="text" id="id" v-model='id' :disabled="flag" v-focus>
+                <label for="name">
+                  名称：
+                </label>
+                <input type="text" id="name" v-model='name' v-focus>
+                <button @click='handle' :disabled='submitFlag'>提交</button>
+              </div>
+            </div>
+          </div>
       <table>
         <thead>
           <tr>
@@ -38,30 +60,38 @@
           </tr>
         </thead>
         <tbody>
-          <tr :key='item.id' v-for='item in books'>
+          <tr v-for='item in books'>
             <td>{{item.id}}</td>
             <td>{{item.name}}</td>
             <td>{{item.date}}</td>
             <td>
-              <a href="" @click.prevent>修改</a>
+                <!--阻止默认行为，不会触发 -->
+              <a href="" @click.prevent @click='toEdit(item.id)'>修改</a>
               <span>|</span>
-              <a href="" @click.prevent>删除</a>
+              <a href="" @click.prevent @click='toDelete(item.id)'>删除</a>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
+    <div id="total"></div>
   </div>
-  <script type="text/javascript" src="js/vue.js"></script>
+  <script type="text/javascript" src="../js/vue.js"></script>
   <script type="text/javascript">
     /*
       图书管理-图书列表展示功能
       注意事项：<a href="" @click.prevent>修改</a>
       事件绑定时，可以只添加修饰符，而不绑定事件函数
     */
-    var vm = new Vue({
+    Vue.directive('focus', {
+        inserted:function(el){
+            el.focus()
+        }
+    })
+    var app = new Vue({
       el: '#app',
       data: {
+        flag:true,
         books: [{
           id: 1,
           name: '三国演义',
@@ -79,8 +109,69 @@
           name: '西游记',
           date: ''
         }]
-      }
-    });
+      },
+      methods: {
+          //添加图书
+        handle:function(){
+            if(this.flag){
+            //修改
+            //修改图书
+            this.books.some((item)=>{
+                if(item.id==this.id){
+                    item.name=this.name
+                    return true
+                }
+            });
+            this.flag=false
+            }else{
+            //添加
+            //添加图书
+            var book={};
+            book.id=this.id
+            book.name=this.name
+            this.books.push(book)
+            //清空表单
+            this.id=''
+            this.name=''
+            }
+            this.id=''
+            this.name=''
+        },
+        toEdit:function(id){
+            //禁止修改id
+            this.flag=true
+            //根据ID查询要编辑的数据
+            var book=this.books.filter(item=>{
+                return item.id==id
+            })
+            console.log(book[0].id);
+            console.log(book[0].name);
+            this.id=book[0].id
+            this.name=book[0].name
+        },
+        toDelete:function(){
+            var index=this.books.findIndex(function(item){
+                return item.id==id
+            })
+            this.books.splice(index,1)
+            // this.books.filter(function(item){
+            //     return item.id !=id
+            // })
+        }
+      },
+      watch: {
+          name:function(val){
+            var flag=this.books.some((item)=>{
+            return item.name==val
+            })
+            if(flag){
+                this.submitFlag=true
+            }else{
+                this.submitFlag=false
+            }
+        }
+      },
+    })
   </script>
 </body>
 </html>
