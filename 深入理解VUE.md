@@ -19,7 +19,7 @@ var app = new Vue({
 <div id="app">{{message}}</div>
 ```
 
-- ### 指令
+- ### 内置指令
 
   ##### v-cloak：防抖（闪烁）
 
@@ -133,4 +133,32 @@ methods: {
 
     - ##### v-show控制元素是否显示到了页面
 
-  - ##### v-for
+  - ##### v-for循环
+
+##### 表单域修饰符
+
+```html
+<input type="text" v-model.lazy="msg"> //当光标离开时，才会同步信息(将input事件转化为change事件)
+<input type="text" v-model.number="age"> //转化格式
+<input type="text" v-model.trim="msg">//去掉前后空格
+```
+
+- ### 自定义指令
+
+  ##### 	全局指令
+
+```JavaScript
+						 //指令名称
+Vue.directive('color',{
+  					 //必有参数
+            inserted:function(el,binding){
+              //binding接受data传入的数据
+              el.style.backgroundColor=binding.value.bgc
+            }
+        })
+//data数据
+msg:{
+      bgc:'red'
+}
+```
+
