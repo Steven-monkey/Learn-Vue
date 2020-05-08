@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <fruit-list :list='list'>
+            <template v-slot='list'>
+                <h1>{{list.item.name}}</h1>
+            </template>
+        </fruit-list>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        Vue.component('fruit-list',{
+            props:['list'],
+            template:`
+            <div>
+                <li :key='item.id' v-for='item in list'>
+                    <slot :item='item'></slot>
+                </li>
+            </div>
+            `
+        })
+        var app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    list:[
+                        {
+                            id:1,
+                            name:'apple'
+                        },
+                        {
+                            id:2,
+                            name:'orange'
+                        },
+                        {
+                            id:3,
+                            name:'banana'
+                        }
+                    ]
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <test-yj></test-yj>
+        <test-js></test-js>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        //全局中心
+        var vm=new Vue()
+        //第一个兄弟组件
+        Vue.component('test-yj', {
+            data() {
+                return {
+                    num:0
+                }
+            },
+            template:`
+            <div>
+                <div> HJS:{{num}}</div>
+                <button @click='handle'>点击</button>
+            </div>`,
+            methods: {
+                handle:function(){
+                    vm.$emit('add-kyj',2)
+                }
+            },
+            mounted() {
+                vm.$on('add-hjs', (val)=>{
+                    this.num+=val
+                })
+            },
+        })
+        //第二个兄弟组件
+        Vue.component('test-js', {
+            data() {
+                return {
+                    num:0
+                }
+            },
+            template:`
+            <div>
+                <div> KYJ:{{num}}</div>
+                <button @click='handle'>点击</button>
+            </div>`,
+            methods: {
+                handle:function(){
+                    vm.$emit('add-hjs',1)
+                }
+            },
+            mounted() {
+                vm.$on('add-kyj', (val)=>{
+                    this.num+=val
+                })
+            },
+        })
+
+        var app=new Vue({
+            el:"#app",
+            data() {
+                return {
+                    
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

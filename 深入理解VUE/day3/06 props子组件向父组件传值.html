@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">    
+        <h3 :style="{fontSize:fontSize + 'px'}">{{pmsg}}</h3>
+        <props-item :parr='parr' :pmsg='pmsg' @add-font='handle($event)'></props-item>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        Vue.component('props-item',{
+            props:['parr','pmsg'],
+            template:`
+            <div>
+                <ul>
+                    <li :key='index' v-for='(item,index) in parr'>{{item}}</li>
+                </ul>
+                <button @click='parr.push("lemon")'>增加</button>
+                //带参数的传值
+                <button @click='$emit("add-font",5)'>扩大文字</button>
+                <button @click='$emit("add-font",100)'>扩大文字</button>
+            </div>`
+        })
+        var app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    pmsg:'父组件内容',
+                    parr:['apple','banana','orange'],
+                    fontSize:20
+                }
+            },
+            methods: {
+                handle:function(val){
+                    this.fontSize += val
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <hello-world></hello-world>
+        <hello-yj></hello-yj>
+        <hello-js></hello-js>
+        <test></test>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        Vue.component('test', {
+            data() {
+                return {
+                    msg:'测试一下下'
+                }
+            },
+            template:`<div>{{msg}}</div>`
+        })
+        //局部组件只能用在注册它的父组件中
+        var HelloWorld={
+            data() {
+                return {
+                    msg:'你好中国'
+                }
+            },
+            template:`<div>{{msg}}</div>`
+        }
+        var HelloYanjun={
+            data() {
+                return {
+                    msg:'你好康彦军'
+                }
+            },
+            template:`<div>{{msg}}</div>`
+        }
+        var HelloJinShuang={
+            data() {
+                return {
+                    msg:'你好侯金双'
+                }
+            },
+            template:`<div>{{msg}}</div>`
+        }
+        var app=new Vue({
+            el:'#app',
+            data() {
+                return {
+                    
+                }
+            },
+            components:{
+                'hello-world':HelloWorld,
+                'hello-yj':HelloYanjun,
+                'hello-js':HelloJinShuang
+            }
+        })
+    </script>
+</body>
+</html>

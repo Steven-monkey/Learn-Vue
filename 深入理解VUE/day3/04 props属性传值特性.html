@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <prop-item :title-menue='titleMenue'></prop-item>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        Vue.component('prop-item',{
+            props:['titleMenue'],
+            template:`<div>{{titleMenue}}</div>`
+        })
+        var app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    titleMenue:'这他娘的可不是写死的数据'
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

@@ -162,3 +162,128 @@ msg:{
 }
 ```
 
+## 理解组件
+
+- #### 组件命名
+
+  ##### 当使用 PascalCase (首字母大写命名) 定义一个组件时，你在引用这个自定义元素时两种命名法都可以使用。也就是说 `<my-component-name>`和`<MyComponentName>` 都是可接受的。*<u>**注意，尽管如此，直接在 DOM (即非字符串的模板) 中使用时只有 kebab-case 是有效的。**</u>*
+
+  ```javascript
+  Vue.component('HelloWorld',{
+              data() {
+                  return {
+                      msg:'HelloWorld'
+                  }
+              },   
+              template:`<p>{{msg}}</p>`
+          })
+  Vue.component('button-counter', {
+              data() {
+                  return {
+                      count:0
+                  }
+              },
+    				//这就叫字符串格式下。
+              template:`<div>
+                  <button @click="handle">鼠标点击了{{count}}</button>
+                  <p>你好呀</p>
+  								//在模板中的使用了
+                  <HelloWorld></HelloWorld>
+                      </div>`,
+              methods: {
+                  handle:function(){
+                     this.count+=2
+                  }
+              },
+          })
+  ```
+
+  ```html
+  //这叫做DOM模式下
+  <div id="app">
+          <button-counter></button-counter>
+          <button-counter></button-counter>
+          <button-counter></button-counter>
+          //在DOM中直接使用了
+          <hello-world></hello-world>
+  </div>
+  ```
+
+- #### 局部组件
+
+  ##### 局部组件只能用在注册它的父组件中（哪里注册，哪里用）
+
+- #### props属性传值（props传递数据是单向数据流）
+
+  - #### 父组件向子组件传值
+
+  ##### 当模板中的props使用驼峰命名时，在html代码中就要使用短横线分割命名
+
+  ##### 若模板中的props使用了短横线分割命名，则html中就不影响可，依旧使用短横线分割命名
+
+  ##### 在字符串形式中使用驼峰命名是可以的
+
+  - #### 子组件向父组件传值
+
+  ##### $emit和$event
+
+```html
+//vue代码
+<button @click='$emit("add-font",5)'>扩大文字</button>
+//使用模板的代码																					//$event用来接收参数
+<props-item :parr='parr' :pmsg='pmsg' @add-font='handle($event)'></props-item>
+```
+
+- #### 非父子组件之间的传值
+
+```javascript
+//全局中心	
+var vm=new Vue()
+//第一个兄弟组件
+Vue.component('test-yj',{
+  data() {
+    return {
+      num:0
+    }
+  },
+  methods: {
+    handle:function(){
+      vm.$emit('addYj', 1)
+    }
+  },
+  mounted() {
+    //监听事件
+    vm.$on('addJs', (val)=>{
+      this.num += val
+    })
+  },
+  template:`<div>
+<div>YJ:{{num}}</div>
+<button @click='handle'>点击</button>
+</div>`
+});
+//第二个兄弟组件
+Vue.component('test-js',{
+  data() {
+    return {
+      num:0
+    }
+  },
+  methods: {
+    handle:function(){
+      vm.$emit('addJs', 2)
+    }
+  },
+  mounted() {
+    //监听事件
+    vm.$on('addYj', (val)=>{
+      this.num += val
+    })
+  },
+  template:`<div>
+<div>JS:{{num}}</div>
+<button @click='handle'>点击</button>
+</div>`
+})
+```
+

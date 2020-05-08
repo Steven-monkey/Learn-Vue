@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <alert-box>这里显示bug</alert-box>
+        <alert-box>这里显示错误</alert-box>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        Vue.component('alert-box',{
+          template:`<div>
+          <strong>ERROR:</strong>
+          <slot></slot>
+          </div>`  
+        })
+        var app = new Vue({
+            el: '#app',
+            data() {
+                return {
+
+                }
+            },
+            methods: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <container>
+            <p slot="header">这是页头</p>
+            <p>这是主要文件</p>
+            <p slot="footer">这是页尾</p>
+        </container>
+        <container>
+            <template v-slot:header>
+                <div>
+                    <h1>这是头页1</h1>
+                    <h1>这是头页2</h1>
+                </div>
+            </template>
+            <p>这是内容部分</p>
+            <p>这是内容部分</p>
+            <template v-slot:footer >
+                <div>
+                    <h2>这个是尾页1</h2>
+                    <h2>这个是尾页2</h2>
+                </div>
+            </template>
+        </container>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        Vue.component('container',{
+            template:`
+            <div>
+                <header>
+                    <slot name="header"></slot>
+                </header>
+                <main>
+                    <slot></slot>
+                </main>
+                <footer>
+                    <slot name="footer"></slot>
+                </footer>
+            </div>`
+        })
+        var app = new Vue({
+            el: '#app',
+            data() {
+                return {
+
+                }
+            },
+            methods: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>
