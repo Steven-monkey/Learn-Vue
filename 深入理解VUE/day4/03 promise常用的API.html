@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function foo(resolve,reject) {
+           return new Promise(function(resolve,reject){
+            setTimeout(() => {
+                // resolve(123)
+                reject('error')
+            }, 1000);  
+           })
+        }
+        // foo()
+        //     .then((data) => {
+        //         console.log(data);
+        //     })
+        //     .catch((data) => {
+        //         console.log(data);
+        //     })
+        //     .finally(()=>{
+        //         console.log('finished');
+        //     })
+        foo()
+            .then((data) => {
+                console.log(data);
+            },(data)=>{
+                console.log(data);
+            })
+            
+            .finally(()=>{
+                console.log('finished');
+            })
+    </script>
+</body>
+</html>

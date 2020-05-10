@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <a href="#/zhuye">主页</a>
+        <a href="#/keji">科技</a>
+        <a href="#/caijing">财经</a>
+        <a href="#/yule">娱乐</a>
+        <!-- 根据 :is 属性指定的组件名称，把对应的的组件渲染到component标签所在的位置 -->
+        <!-- 可用component标签当做 《组件的占位符》 -->
+        <component :is="comName"></component>
+    </div>
+    <script>
+        //主页组件
+        const zhuye={
+            template:'<h1>主页信息</h1>'
+        }
+        //科技组件
+        const keji={
+            template:'<h1>科技信息</h1>'
+        }
+        //财经组件
+        const caijing={
+            template:'<h1>财经信息</h1>'
+        }
+        //娱乐组件
+        const yule={
+            template:'<h1>娱乐信息</h1>'
+        }
+        var app=new Vue({
+            el:'#app',
+            data() {
+                return {
+                    comName:'zhuye'
+                }
+            },
+            components:{
+                zhuye,
+                keji,
+                caijing,
+                yule
+            }
+        })
+        window.onhashchange=function(){
+            switch (location.hash.slice(1)) {
+                case '/zhuye':
+                    app.comName='zhuye'
+                    break;
+                case '/caijing':
+                    app.comName='caijing'
+                    break;
+                case '/keji':
+                    app.comName='keji'
+                    break;
+                case '/yule':
+                    app.comName='yule'
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>

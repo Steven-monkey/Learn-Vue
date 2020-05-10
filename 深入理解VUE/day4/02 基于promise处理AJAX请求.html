@@ -6,6 +6,31 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <script>
+        /**
+        基于promise处理AJAX请求
+        **/
+        function queryData(url){
+            return new Promise(function(resolve,reject){
+                var xhr=new XMLHttpRequest()
+                xhr.onreadystatechange=function(){
+                    if(xhr.readyState!=4) return;
+                    if (xhr.readyState==4 && xhr.status==200)  {
+                        resolve(xhr.responseText)
+                    } else {
+                        reject('服务器端错误')
+                    }
+                }
+                xhr.open('get',url)
+                xhr.send(null)
+            })
+        }
+        queryData()
+        .then(function(data){
+            console.log(data);
+        },function(info){
+            console.log(info); 
+        })
+    </script>
 </body>
 </html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <router-link to='/user/1'>用户1</router-link>
+        <router-link to='/user/2'>用户2</router-link>
+        <router-link to='/user/3'>用户3</router-link>
+        <router-link to='/user/4'>用户4</router-link>
+        <router-link to='/login'>登录</router-link>
+        <!-- 路由占位符或者路由填充位 -->
+        <router-view></router-view>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script src="../js/vue-router.js"></script>
+    <script>
+        //创建实例对象的组件
+        const User={
+            props:['uname','age'],
+            template:`<h1>User组件-------{{uname}}------{{age}}</h1>`
+        }
+        const Login={
+            template:`<h1>Login组件</h1>`
+        }
+        //创建路由实例对象
+        const router = new VueRouter({
+            routes: [
+                {
+                    path:'/',
+                    redirect:'/user'
+                },
+                {
+                    path:'/user/:id',
+                    component:User,
+                    props:{uname:'kyj',age:22}
+                },
+                {
+                    path:'/login',
+                    component:Login
+                }
+            ]
+        })
+        var app=new Vue({
+            el:"#app",
+            //挂载到实例对象上面
+            router,
+        })
+    </script>
+</body>
+</html>

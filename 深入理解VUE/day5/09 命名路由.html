@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <router-link :to="{name:'user'}">用户</router-link>
+        <router-link :to="{name:'login'}">登录</router-link>
+        <!-- 路由占位符或者路由填充位 -->
+        <router-view></router-view>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script src="../js/vue-router.js"></script>
+    <script>
+        //创建实例对象的组件
+        const User={
+            template:`<h1>User组件</h1>`
+        }
+        const Login={
+            template:`
+            <div>
+                <h1>Login组件</h1>
+                </hr>
+                <router-link to='/login/tab1'>tab1</router-link>
+                <router-link to='/login/tab2'>tab2</router-link>
+                <router-view></router-view>
+            </div>`
+        }
+        const Tab1={
+            template:`<h3>tab1页面</h3>`
+        }
+        const Tab2={
+            template:`<h3>tab2页面</h3>`
+        }
+        //创建路由实例对象
+        const router = new VueRouter({
+            routes: [
+                {
+                    path:'/',
+                    redirect:'/user'
+                },
+                {
+                    path:'/user',
+                    name:'user',
+                    component:User
+                },
+                {
+                    path:'/login',
+                    name:'login',
+                    component:Login,
+                    //children 是一个数组
+                    children:[
+                        {
+                            path:'/login/tab1',
+                            name:'tab1',
+                            component:Tab1
+                        },
+                        {
+                            path:'/login/tab2',
+                            name:"tab2",
+                            component:Tab2
+                        }
+                    ]
+                }
+            ]
+        })
+        var app=new Vue({
+            el:"#app",
+            //挂载到实例对象上面
+            router,
+        })
+    </script>
+</body>
+</html>
